@@ -53,6 +53,7 @@ GEM
     erubis (2.7.0)
     faraday (0.14.0)
       multipart-post (>= 1.2, < 3)
+    fast-stemmer (1.0.2)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     google-cloud-core (1.2.0)
@@ -195,6 +196,7 @@ PLATFORMS
 
 DEPENDENCIES
   capybara
+  fast-stemmer
   google-cloud-datastore (~> 1.4)
   jquery-rails
   poltergeist

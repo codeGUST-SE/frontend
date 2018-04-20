@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 gem "rails", "~> 4.2.8"
 gem "google-cloud-datastore", "~> 1.4"
+gem 'fast-stemmer'
 
 gem "jquery-rails"
 
