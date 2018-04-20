@@ -1,7 +1,8 @@
 class SearchController < ApplicationController
 
   def index
-    @search_results = Search.query('alaska')
+    @query = params.has_key?(:q) ? params[:q] : ''
+    @search_results = @query == '' ? [] : Search.query(@query)
   end
 
 end

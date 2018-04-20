@@ -1,5 +1,11 @@
 <h1>Search results</h1>
 
+<%= form_tag({:controller => "search", :action => "index"}, :method => "get") do %>
+  <%= label_tag(:q, "Search for:") %>
+  <%= text_field_tag(:q) %>
+  <%= submit_tag("Search!") %>
+<% end %>
+
 <% @search_results.each do |result| %>
   <p><%= link_to result,result %></p>
 <% end %>
