@@ -15,12 +15,19 @@ class Search
     query = simplify_query(user_query)
 
     results = {}
+    min_index_size = 200000
+    min_index = ''
     query.each do |index|
-      results[index] = retrieve_index(index)
+      retrieved = retrieve_index(index)
+      results[index] = retrieved
+      if min_index_size > retrieved.size
+        min_index_size = retrieved.size
+        min_index = index
+      end
     end
 
     filtered_results = []
-    init_index = query[0]
+    init_index = min_index
 
     results[init_index].each do |url, value|
       f = true
