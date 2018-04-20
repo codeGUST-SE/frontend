@@ -11,6 +11,8 @@ class Search
                       database_configuration[Rails.env]["dataset_id"]
   )
 
+  @@cache = ActiveSupport::Cache::MemoryStore.new
+
   def self.query(user_query)
     query = simplify_query(user_query)
 
@@ -42,6 +44,8 @@ class Search
   private
 
   def self.retrieve_index(index)
+    @@cache.fetch(index) if @@cache.exist?(index)
+
     offset = 0
     result_hash = {}
     while true
@@ -51,6 +55,8 @@ class Search
       result_hash.merge!(eval(entity['value']))
       offset += 1
     end
+    
+    @@cache.write(index, result_hash, expires_in: 30.day)
     result_hash
   end
 
