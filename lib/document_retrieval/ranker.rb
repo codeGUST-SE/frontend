@@ -9,22 +9,46 @@ class Ranker
   end
 
   def query
-    results, init_index = get_result_hash
+    index_to_url, init_index = get_index_to_url
 
-    filtered_results = []
-    results[init_index].each do |url, value|
+    url_to_pos = {}
+    index_to_url[init_index].each do |url, pos_list|
+      h = []
       f = true
       @query.each do |index|
-        f &&= results[index].key? url
+        f &&= index_to_url[index].key? url
+        break if f == false
+        h << index_to_url[index][url][1]
       end
-      filtered_results << url if f
+      url_to_pos[url] = h if f
     end
-    filtered_results
+
+    puts url_to_pos
+
+    # calculate scores for consecutive query words
+    scores = {}
+    url_to_pos.each do |url, pos_list|
+      scores[url] = 0
+      pos_list.each_with_index do |w1, w1_i|
+        w1.each do |w1_pos|
+          offset = 1
+          f = true
+          pos_list[w1_i+1..-1].each do |w2|
+            f &&= w2.include? (w1_pos + offset)
+            break if !f
+            scores[url] += offset + 1 if f
+            offset += 1
+          end
+        end
+      end
+    end
+    # TODO use a priority queue for more efficient sorting
+    scores.to_a.sort_by(&:last).reverse
   end
 
   private
 
-  def get_result_hash
+  def get_index_to_url
     results = {}
     min_index_size = 200000
     min_index = ''
@@ -41,7 +65,6 @@ class Ranker
 
   def retrieve_index(index)
     DocumentRetrieval.get_cache.fetch(index) if DocumentRetrieval.get_cache.exist?(index)
-
     offset = 0
     result_hash = {}
     while true

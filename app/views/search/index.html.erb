@@ -7,5 +7,5 @@
 <% end %>
 
 <% @search_results.each do |result| %>
-  <p><%= link_to result,result %></p>
+  <%= result.second %> <%= link_to result.first,result.first %><br/>
 <% end %>
