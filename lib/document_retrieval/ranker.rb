@@ -23,11 +23,18 @@ class Ranker
       url_to_pos[url] = h if f
     end
 
-    puts url_to_pos
-
-    # calculate scores for consecutive query words
+    # calculate scores
     scores = {}
+    title_scores = {}
     url_to_pos.each do |url, pos_list|
+
+      # calculate title scores
+      title_scores[url] = 0
+      @query.each do |index|
+        title_scores[url] += index_to_url[index][url][0]
+      end
+
+      # calculate scores for consecutive query words
       scores[url] = 0
       pos_list.each_with_index do |w1, w1_i|
         w1.each do |w1_pos|
@@ -42,8 +49,27 @@ class Ranker
         end
       end
     end
+
+    results = []
+    scores.each do |url, score|
+      results << Result.new(url, score, title_scores[url])
+    end
+
     # TODO use a priority queue for more efficient sorting
-    scores.to_a.sort_by(&:last).reverse
+    results.sort_by(&:total).reverse
+  end
+
+  class Result
+
+    attr_accessor :score1, :title, :total, :url
+
+    def initialize(url, score1, title)
+      @url = url
+      @score1 = score1
+      @title = title
+      @total = @score1 + @title
+    end
+
   end
 
   private
