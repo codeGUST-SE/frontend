@@ -23,17 +23,14 @@
  .push-mid {
     margin-top: 30%;
  }
-
  .search-container {
     border: 1px solid #ced4da;
  }
  .removebtn-css {
     color: #212529;
-    background-color: #ffffff;
     border-color: #ffffff;
  }
  .removeform-control-css {
-    background-color: #ffffff;
     border-color: #ffffff;
  }
 
@@ -47,3 +44,50 @@
     right: 10px;
     cursor: pointer;
 }
+.white {
+    background-color: #ffffff;
+ }
+
+.inline {
+    flex-direction: none !important;
+    flex-wrap: none !important;
+ }
+
+.list {
+    margin-left: 3%;
+    margin-top: 3%;
+    margin-right: 3%;
+}
+
+.card {
+    margin-top: 10px;
+    height: 0%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    padding: 5px 0px 5px 8px;
+    width: 80%;
+}
+
+.link-css {
+    font-size: 15px;
+}
+
+.header-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media only screen and (max-width: 768px) {
+    .center {
+        margin: auto;
+        width: 100%;
+        padding: 10px;
+    }
+    .card {
+        margin-top: 10px;
+        height: 0%;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        padding: 5px 0px 5px 8px;
+    }
+}
+  
