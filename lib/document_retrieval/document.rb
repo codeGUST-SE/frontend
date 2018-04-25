@@ -21,4 +21,8 @@ class Document
     @url
   end
 
+  def <=>(other)
+    @total <=> other.total
+  end
+
 end

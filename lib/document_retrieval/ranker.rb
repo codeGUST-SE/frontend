@@ -1,7 +1,10 @@
 require 'fast_stemmer'
 require 'google/cloud/datastore'
+require 'pqueue'
 
 class Ranker
+
+  MAX_RESULT_NUMBER = 50
 
   def initialize(datastore, user_query)
     @datastore = datastore
@@ -59,13 +62,18 @@ class Ranker
       end
     end
 
-    results = []
+    # Priority Queue of Document type
+    doc_pq = PQueue.new() { |a,b| a.total > b.total }
     order_score.each do |url, score|
-      results << Document.new(url, score, title_scores[url], count_score[url])
+      doc_pq.push Document.new(url, score, title_scores[url], count_score[url])
     end
 
-    # TODO use a priority queue for more efficient sorting
-    results.sort_by(&:total).reverse
+    results = []
+    (0..MAX_RESULT_NUMBER).each do
+      results << doc_pq.pop
+    end
+
+    results
   end
 
   private
