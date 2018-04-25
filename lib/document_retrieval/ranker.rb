@@ -1,13 +1,11 @@
 require 'fast_stemmer'
-require 'google/cloud/datastore'
 require 'pqueue'
 
 class Ranker
 
   MAX_RESULT_NUMBER = 100
 
-  def initialize(datastore, user_query)
-    @datastore = datastore
+  def initialize(user_query)
     @query = simplify_query(user_query)
   end
 
@@ -83,7 +81,7 @@ class Ranker
     min_index_size = 200000
     min_index = ''
     @query.each do |index|
-      retrieved = retrieve_index(index)
+      retrieved = DocumentRetrieval.retrieve_index(index)
       results[index] = retrieved
       if min_index_size > retrieved.size
         min_index_size = retrieved.size
@@ -91,22 +89,6 @@ class Ranker
       end
     end
     return results, min_index
-  end
-
-  def retrieve_index(index)
-    DocumentRetrieval.get_cache.fetch(index) if DocumentRetrieval.get_cache.exist?(index)
-    offset = 0
-    result_hash = {}
-    while true
-      key = @datastore.key(DocumentRetrieval.get_index_kind, "#{index}#{offset}")
-      entity = @datastore.find(key)
-      break if entity == nil
-      result_hash.merge!(eval(entity['value']))
-      offset += 1
-    end
-
-    DocumentRetrieval.get_cache.write(index, result_hash, expires_in: 30.day)
-    result_hash
   end
 
   def simplify_query(user_query)
