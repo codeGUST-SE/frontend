@@ -61,25 +61,11 @@ class Ranker
 
     results = []
     order_score.each do |url, score|
-      results << Result.new(url, score, title_scores[url], count_score[url])
+      results << Document.new(url, score, title_scores[url], count_score[url])
     end
 
     # TODO use a priority queue for more efficient sorting
     results.sort_by(&:total).reverse
-  end
-
-  class Result
-
-    attr_accessor :order_score, :title_score, :count_score, :total, :url
-
-    def initialize(url, order_score, title_score, count_score)
-      @url = url
-      @order_score = order_score
-      @title_score = title_score
-      @count_score = count_score
-      @total = @order_score + @title_score + @count_score
-    end
-
   end
 
   private

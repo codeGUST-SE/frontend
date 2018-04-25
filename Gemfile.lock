@@ -144,6 +144,7 @@ GEM
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
     popper_js (1.12.9)
+    pqueue (2.1.0)
     public_suffix (3.0.2)
     rack (2.0.5)
     rack-test (1.0.0)
@@ -240,6 +241,7 @@ DEPENDENCIES
   inline_svg
   jquery-rails
   poltergeist
+  pqueue
   rack-test
   rails (~> 5.2.0)
   rspec-rails
