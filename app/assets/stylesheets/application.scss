@@ -34,6 +34,11 @@
     border-color: #ffffff;
  }
 
+.center-div{
+  margin: 0 auto;
+  width: 60%;
+}
+
 .searchbar {
     position: relative;
     max-width: 100%;
@@ -47,6 +52,10 @@
 .white {
     background-color: #ffffff;
  }
+
+.input-css {
+    border-radius: 0rem;
+}
 
 .inline {
     flex-direction: none !important;
@@ -76,9 +85,12 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+.space-nav-bar {
+    margin-left:20px
+}
 
 @media only screen and (max-width: 768px) {
-    .center {
+    .center-nav-bar {
         margin: auto;
         width: 100%;
         padding: 10px;
@@ -89,6 +101,10 @@
         width: 100%;
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
         padding: 5px 0px 5px 8px;
+    }
+    .center-div{
+      margin: 0 auto;
+      width: 100%;
     }
 }
   

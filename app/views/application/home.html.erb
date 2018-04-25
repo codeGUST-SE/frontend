@@ -3,7 +3,7 @@
     <div class= "row justify-content-center">
         <%= inline_svg "logo-bg.svg"%>
     </div>
-    <div class= "row justify-content-center" style= "margin-top: 10px">
+    <div class= "center-div" style= "margin-top: 10px">
       <%= form_tag({:controller => "search", :action => "index"}, :method => "get") do %>
       <div class="search-container searchbar">    
       <%= text_field_tag "q", nil, placeholder: "Gust it!", class:"form-control removeform-control-css searchbar white", required: true%>
