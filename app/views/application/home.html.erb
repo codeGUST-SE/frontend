@@ -1,7 +1,19 @@
-<h1>CodeGUST home page</h1>
-
-<%= form_tag({:controller => "search", :action => "index"}, :method => "get") do %>
-  <%= label_tag(:q, "Search for:") %>
-  <%= text_field_tag(:q) %>
-  <%= submit_tag("Search!") %>
-<% end %>
+<div class="container"> 
+  <div class="push-mid">
+  <div class= "row justify-content-center">
+    <h1>CodeGUST</h1>
+  </div>
+  <div class= "row justify-content-center">
+    <%= form_tag({:controller => "search", :action => "index"}, :method => "get") do %>
+    <div class="row search-container">
+      <%= text_field_tag 'q', nil, class: "form-control col-10 removeform-control-css", placeholder: 'Gust it!'%>
+      <%= button_to("", :class => "col-2 btn btn-light removebtn-css", :action => "submit") do%>
+          <%= fa_icon "search", class: "pull-right" %>
+      <% end %>
+    </div>
+    <% end %>
+    </div>
+  </div>
+  </div>
+  </div>
+</div>

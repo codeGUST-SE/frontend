@@ -1,3 +1,4 @@
+
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
@@ -13,3 +14,25 @@
  *= require_tree .
  *= require_self
  */
+ /*
+ *= require font-awesome
+ */
+
+ @import "bootstrap";
+
+ .push-mid {
+    margin-top: 30%;
+ }
+
+ .search-container {
+    border: 1px solid #ced4da;
+ }
+ .removebtn-css {
+    color: #212529;
+    background-color: #ffffff;
+    border-color: #ffffff;
+ }
+ .removeform-control-css {
+    background-color: #ffffff;
+    border-color: #ffffff;
+ }
