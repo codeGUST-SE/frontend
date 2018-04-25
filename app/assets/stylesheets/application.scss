@@ -36,3 +36,14 @@
     background-color: #ffffff;
     border-color: #ffffff;
  }
+
+.searchbar {
+    position: relative;
+}
+
+.searchbar .icon { 
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}

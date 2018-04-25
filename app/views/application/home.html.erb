@@ -5,11 +5,9 @@
   </div>
   <div class= "row justify-content-center">
     <%= form_tag({:controller => "search", :action => "index"}, :method => "get") do %>
-    <div class="row search-container">
-      <%= text_field_tag 'q', nil, class: "form-control col-10 removeform-control-css", placeholder: 'Gust it!'%>
-      <%= button_to("", :class => "col-2 btn btn-light removebtn-css", :action => "submit") do%>
-          <%= fa_icon "search", class: "pull-right" %>
-      <% end %>
+    <div class="row search-container searchbar">    
+    <%= text_field_tag "q", nil, placeholder: "Gust it!", class:"form-control removeform-control-css searchbar", required: true%>
+    <%= fa_icon "search", class: "icon pull-right" %>
     </div>
     <% end %>
     </div>
