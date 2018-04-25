@@ -118,6 +118,7 @@ GEM
       capybara (~> 2.1)
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
+    pqueue (2.1.0)
     public_suffix (3.0.2)
     rack (1.6.9)
     rack-test (0.6.3)
@@ -200,6 +201,7 @@ DEPENDENCIES
   google-cloud-datastore (~> 1.4)
   jquery-rails
   poltergeist
+  pqueue
   rack-test
   rails (~> 4.2.8)
   rspec-rails
