@@ -23,19 +23,28 @@ class Ranker
       url_to_pos[url] = h if f
     end
 
-    # calculate scores
-    scores = {}
+    # calculate title_score
     title_scores = {}
     url_to_pos.each do |url, pos_list|
-
-      # calculate title scores
       title_scores[url] = 0
       @query.each do |index|
         title_scores[url] += index_to_url[index][url][0]
       end
+    end
 
-      # calculate scores for consecutive query words
-      scores[url] = 0
+    # calculate count_score
+    count_score = {}
+    url_to_pos.each do |url, pos_list|
+      count_score[url] = 0
+      @query.each do |index|
+        count_score[url] += index_to_url[index][url][1].length
+      end
+    end
+
+    # calculate order_score
+    order_score = {}
+    url_to_pos.each do |url, pos_list|
+      order_score[url] = 0
       pos_list.each_with_index do |w1, w1_i|
         w1.each do |w1_pos|
           offset = 1
@@ -43,7 +52,7 @@ class Ranker
           pos_list[w1_i+1..-1].each do |w2|
             f &&= w2.include? (w1_pos + offset)
             break if !f
-            scores[url] += offset + 1 if f
+            order_score[url] += offset + 1 if f
             offset += 1
           end
         end
@@ -51,8 +60,8 @@ class Ranker
     end
 
     results = []
-    scores.each do |url, score|
-      results << Result.new(url, score, title_scores[url])
+    order_score.each do |url, score|
+      results << Result.new(url, score, title_scores[url], count_score[url])
     end
 
     # TODO use a priority queue for more efficient sorting
@@ -61,13 +70,14 @@ class Ranker
 
   class Result
 
-    attr_accessor :score1, :title, :total, :url
+    attr_accessor :order_score, :title_score, :count_score, :total, :url
 
-    def initialize(url, score1, title)
+    def initialize(url, order_score, title_score, count_score)
       @url = url
-      @score1 = score1
-      @title = title
-      @total = @score1 + @title
+      @order_score = order_score
+      @title_score = title_score
+      @count_score = count_score
+      @total = @order_score + @title_score + @count_score
     end
 
   end

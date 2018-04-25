@@ -7,5 +7,5 @@
 <% end %>
 
 <% @search_results.each do |result| %>
-  <%= result.score1 %> <%= result.title %> <%= link_to result.url,result.url %><br/>
+  <%= result.order_score %> <%= result.count_score %> <%= result.title_score %> <%= link_to result.url,result.url %><br/>
 <% end %>
