@@ -4,7 +4,7 @@ require 'pqueue'
 
 class Ranker
 
-  MAX_RESULT_NUMBER = 50
+  MAX_RESULT_NUMBER = 100
 
   def initialize(datastore, user_query)
     @datastore = datastore
