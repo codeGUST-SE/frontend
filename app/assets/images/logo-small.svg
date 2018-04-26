@@ -1,18 +1,21 @@
  <svg class="center" width="80px" height="70" viewBox="0 0 241 132" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-      <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+       <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>Logo</title>
+    <desc>Created with Sketch.</desc>
     <defs>
         <rect id="path-1" x="12.0585116" y="1.02843557" width="17" height="2"></rect>
         <rect id="path-2" x="0" y="8" width="29.319033" height="2.20243473"></rect>
-        </defs>
-        <g id="Desktop-HD" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-430.000000, -369.000000)">
-        <g id="Logo" transform="translate(402.000000, 370.000000)">
+        <rect id="path-3" x="0" y="31" width="127" height="44" rx="22"></rect>
+    </defs>
+    <g id="Desktop-HD" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-430.000000, -372.000000)">
+        <g id="Logo" transform="translate(402.000000, 373.000000)">
             <text id="code" font-family="Comfortaa-Regular, Comfortaa" font-size="40" font-weight="normal" fill="#000000">
-                <tspan x="26.12" y="118">code</tspan>
+                <tspan x="26.12" y="115">code</tspan>
             </text>
             <text id="GUST" font-family="Comfortaa-Regular, Comfortaa" font-size="40" font-weight="normal" fill="#000000">
-                <tspan x="131.42" y="118" font-style = "italic">GUST</tspan>
+                <tspan x="131.42" y="115" font-style = "italic">GUST</tspan>
             </text>
-            <g id="wind" transform="translate(111.000000, 63.000000)">
+            <g id="wind" transform="translate(106.000000, 63.000000)">
                 <g id="Rectangle" transform="translate(20.558512, 2.028436) rotate(7.000000) translate(-20.558512, -2.028436) ">
                     <use fill="#DCDCDC" fill-rule="evenodd" xlink:href="#path-1"></use>
                     <rect stroke="#D6D6D6" stroke-width="1" x="12.5585116" y="1.52843557" width="16" height="1"></rect>
@@ -22,19 +25,14 @@
                     <rect stroke="#D6D6D6" stroke-width="1" x="0.5" y="8.5" width="28.319033" height="1.20243473"></rect>
                 </g>
             </g>
-            <g id="Cloud" transform="translate(143.000000, 0.000000)" fill="#0099CC" stroke="#0099CC">
-                <ellipse id="Oval" cx="30.5" cy="28" rx="14.5" ry="13"></ellipse>
-                <ellipse id="Oval-Copy" cx="22.5" cy="53" rx="22.5" ry="21"></ellipse>
-                <ellipse id="Oval-Copy-4" cx="104" cy="53" rx="20" ry="19"></ellipse>
-                <ellipse id="Oval-Copy-7" cx="53" cy="53" rx="20" ry="19"></ellipse>
-                <ellipse id="Oval-Copy-9" cx="40" cy="55" rx="20" ry="19"></ellipse>
-                <ellipse id="Oval-Copy-10" cx="57" cy="55" rx="20" ry="19"></ellipse>
-                <ellipse id="Oval-Copy-11" cx="73" cy="55" rx="20" ry="19"></ellipse>
-                <ellipse id="Oval-Copy-12" cx="93" cy="55" rx="20" ry="19"></ellipse>
-                <ellipse id="Oval-Copy-14" cx="104" cy="55" rx="20" ry="19"></ellipse>
-                <ellipse id="Oval-Copy-15" cx="70.5" cy="23.5" rx="33.5" ry="23.5"></ellipse>
+            <g id="Cloud" transform="translate(139.000000, 0.000000)">
+                <ellipse id="Oval" stroke="#0099CC" fill="#0099CC" cx="31.5" cy="28" rx="14.5" ry="13"></ellipse>
+                <ellipse id="Oval-Copy-15" stroke="#0099CC" fill="#0099CC" cx="71.5" cy="32" rx="33.5" ry="32"></ellipse>
+                <g id="Rectangle-2">
+                    <use fill="#0099CC" fill-rule="evenodd" xlink:href="#path-3"></use>
+                    <rect stroke="#0099CC" stroke-width="1" x="0.5" y="31.5" width="126" height="43" rx="21.5"></rect>
+                </g>
             </g>
         </g>
     </g>
 </svg>
-    

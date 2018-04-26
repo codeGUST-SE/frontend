@@ -21,7 +21,7 @@
  @import "bootstrap";
 
  .push-mid {
-    margin-top: 30%;
+    margin-top: 20%;
  }
  .search-container {
     border: 1px solid #ced4da;
@@ -36,18 +36,24 @@
 
 .center-div{
   margin: 0 auto;
-  width: 60%;
+  width: 50%;
 }
 
 .searchbar {
     position: relative;
     max-width: 100%;
 }
+
+.searchbar-form-control {
+    padding: 0.85em 0.75rem;
+}
 .searchbar .icon { 
     position: absolute;
-    top: 10px;
+    top: 21%;
     right: 10px;
+    font-size: 29px;
     cursor: pointer;
+    color: #999999;
 }
 .white {
     background-color: #ffffff;
