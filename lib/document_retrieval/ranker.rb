@@ -32,12 +32,6 @@ class Ranker
     end
 
     @docs.normalize_scores
-
-    @docs.get_docs.each do |url, doc|
-      puts url
-      puts @docs.get_doc_order_score(url)
-    end
-
     # Priority Queue of Document type
     doc_pq = PQueue.new() { |a,b| a.total > b.total }
     @docs.get_docs.each do |url, doc|
