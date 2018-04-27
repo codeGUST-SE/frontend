@@ -31,7 +31,8 @@ class QueryProcessor
       end
     end
 
-    @ranker.get_ranked_documents()
+    @ranker.calculate_order_scores
+    @ranker.get_ranked_documents
   end
 
   private
