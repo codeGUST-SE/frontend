@@ -3,26 +3,35 @@ require 'fast_stemmer'
 class QueryProcessor
 
   def initialize(user_query)
+    @docs = DocumentCollection.new
     @query = simplify_query(user_query)
-    @ranker = Ranker.new(@query)
+    @ranker = Ranker.new(@query, @docs)
   end
 
   def query
     index_to_url, init_index = get_index_to_url
 
-    url_to_pos = {}
     index_to_url[init_index].each do |url, pos_list|
-      h = []
+      h = {}
+      t = 0
+      cnt = 0
       f = true
       @query.each do |index|
         f &&= index_to_url[index].key? url
         break if f == false
-        h << index_to_url[index][url][1]
+        h[index] = index_to_url[index][url][1]
+        t += index_to_url[index][url][0]
+        cnt += index_to_url[index][url][1].length
       end
-      url_to_pos[url] = h if f
+      if f
+        @docs.add_doc(url)
+        @docs.add_doc_tokens(url, h)
+        @docs.add_doc_title_score(url, t)
+        @docs.add_doc_count_score(url, cnt)
+      end
     end
 
-    @ranker.get_ranked_documents(url_to_pos, index_to_url)
+    @ranker.get_ranked_documents()
   end
 
   private

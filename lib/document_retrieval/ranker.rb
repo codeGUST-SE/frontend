@@ -4,52 +4,44 @@ class Ranker
 
   MAX_RESULT_NUMBER = 100
 
-  def initialize(query)
+  def initialize(query, docs)
     @query = query
+    @docs = docs
   end
 
-  def get_ranked_documents(url_to_index_to_pos, index_to_url)
-
-    # calculate title_score
-    title_scores = {}
-    url_to_index_to_pos.each do |url, pos_list|
-      title_scores[url] = 0
-      @query.each do |index|
-        title_scores[url] += index_to_url[index][url][0]
-      end
-    end
-
-    # calculate count_score
-    count_score = {}
-    url_to_index_to_pos.each do |url, pos_list|
-      count_score[url] = 0
-      @query.each do |index|
-        count_score[url] += index_to_url[index][url][1].length
-      end
-    end
+  def get_ranked_documents()
 
     # calculate order_score
-    order_score = {}
-    url_to_index_to_pos.each do |url, pos_list|
-      order_score[url] = 0
-      pos_list.each_with_index do |w1, w1_i|
+    @docs.get_docs.each do |url, doc|
+      order_score = 0
+      @query.each_with_index do |token1, w1_i|
+        w1 = @docs.get_doc_tokens(url)[token1]
         w1.each do |w1_pos|
           offset = 1
           f = true
-          pos_list[w1_i+1..-1].each do |w2|
+          @query[w1_i+1..-1].each do |token2|
+            w2 = @docs.get_doc_tokens(url)[token2]
             f &&= w2.include? (w1_pos + offset)
             break if !f
-            order_score[url] += offset + 1 if f
+            order_score += offset + 1
             offset += 1
           end
         end
       end
+      @docs.add_doc_order_score(url, order_score)
+    end
+
+    @docs.normalize_scores
+
+    @docs.get_docs.each do |url, doc|
+      puts url
+      puts @docs.get_doc_order_score(url)
     end
 
     # Priority Queue of Document type
     doc_pq = PQueue.new() { |a,b| a.total > b.total }
-    order_score.each do |url, score|
-      doc_pq.push Document.new(url, score, title_scores[url], count_score[url])
+    @docs.get_docs.each do |url, doc|
+      doc_pq.push doc
     end
 
     results = []
