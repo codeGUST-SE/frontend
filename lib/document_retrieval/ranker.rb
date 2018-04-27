@@ -9,9 +9,23 @@ class Ranker
     @docs = docs
   end
 
-  def get_ranked_documents()
+  def get_ranked_documents
+    @docs.normalize_scores
+    # Priority Queue of Document type
+    doc_pq = PQueue.new() { |a,b| a.total > b.total }
+    @docs.get_docs.each do |url, doc|
+      doc_pq.push doc
+    end
 
-    # calculate order_score
+    results = []
+    (0..MAX_RESULT_NUMBER).each do
+      break if doc_pq.top == nil
+      results << doc_pq.pop
+    end
+    results
+  end
+
+  def calculate_order_scores
     @docs.get_docs.each do |url, doc|
       order_score = 0
       @query.each_with_index do |token1, w1_i|
@@ -30,21 +44,6 @@ class Ranker
       end
       @docs.add_doc_order_score(url, order_score)
     end
-
-    @docs.normalize_scores
-    # Priority Queue of Document type
-    doc_pq = PQueue.new() { |a,b| a.total > b.total }
-    @docs.get_docs.each do |url, doc|
-      doc_pq.push doc
-    end
-
-    results = []
-    (0..MAX_RESULT_NUMBER).each do
-      break if doc_pq.top == nil
-      results << doc_pq.pop
-    end
-
-    results
   end
 
 end
