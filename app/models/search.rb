@@ -2,7 +2,7 @@ require 'fast_stemmer'
 require "google/cloud/datastore"
 
 class Search
-
+  
   INDEX_KIND = 'index'
 
   # Google::Cloud::Datastore::Dataset for the configured dataset

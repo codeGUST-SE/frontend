@@ -1,0 +1,124 @@
+
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+ /*
+ *= require font-awesome
+ */
+
+ @import "bootstrap";
+
+ .push-mid {
+    margin-top: 20%;
+ }
+ .search-container {
+    border: 1px solid #ced4da;
+ }
+ .removebtn-css {
+    color: #212529;
+    border-color: #ffffff;
+ }
+ .removeform-control-css {
+    border-color: #ffffff;
+ }
+
+.center-div{
+  margin: 0 auto;
+  width: 50%;
+}
+
+.searchbar {
+    position: relative;
+    max-width: 100%;
+}
+
+.searchbar-form-control {
+    padding: 0.85em 0.75rem;
+}
+.searchbar .icon { 
+    position: absolute;
+    top: 21%;
+    right: 10px;
+    font-size: 29px;
+    cursor: pointer;
+    color: #999999;
+}
+.white {
+    background-color: #ffffff;
+ }
+
+.input-css {
+    border-radius: 0rem;
+}
+
+.inline {
+    flex-direction: none !important;
+    flex-wrap: none !important;
+ }
+
+.list {
+    margin-left: 3%;
+    margin-top: 3%;
+    margin-right: 3%;
+}
+
+.card {
+    margin-top: 10px;
+    height: 0%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.02), 0 3px 6px rgba(0, 0, 0, 0.23);
+    padding: 5px 0px 5px 8px;
+    width: 45%;
+}
+
+.link-css {
+    font-size: 15px;
+}
+.margin-left{
+    margin-left: 3%;
+}
+
+.header-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.space-nav-bar {
+    margin-left:20px;
+    width: 39%;
+}
+
+@media only screen and (max-width: 768px) {
+    .center-nav-bar {
+        margin: auto;
+        width: 100%;
+        padding: 10px;
+    }
+    .card {
+        margin-top: 10px;
+        height: 0%;
+        width: 100%;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.02), 0 3px 6px rgba(0, 0, 0, 0.23);
+        padding: 5px 0px 5px 8px;
+    }
+    .center-div{
+      margin: 0 auto;
+      width: 100%;
+    }
+    .space-nav-bar {
+        margin-left:20px;
+    }
+    
+}
+  

@@ -4,9 +4,11 @@ gem "rails", "~> 5.2.0"
 gem "google-cloud-datastore", "~> 1.4"
 gem 'fast-stemmer'
 
+gem 'bootstrap', '~> 4.1.0'
 gem "jquery-rails"
 gem "turbolinks"
-
+gem "font-awesome-rails"
+gem 'inline_svg'
 # For Windows support
 gem "tzinfo-data"
 
