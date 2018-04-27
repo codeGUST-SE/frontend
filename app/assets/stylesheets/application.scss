@@ -84,6 +84,9 @@
 
 .link-css {
     font-size: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .margin-left{
     margin-left: 0%;
@@ -97,6 +100,19 @@
 .space-nav-bar {
     margin-left:20px;
     width: 39%;
+}
+
+@media only screen and (max-width: 1200px) {
+    .card {
+        margin-top: 10px;
+        height: 0%;
+        width: 50%;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.02), 0 3px 6px rgba(0, 0, 0, 0.23);
+        padding: 5px 0px 5px 8px;
+    }
+    .space-nav-bar {
+        width: 40%;
+    }
 }
 
 @media only screen and (max-width: 768px) {
@@ -117,7 +133,7 @@
       width: 100%;
     }
     .space-nav-bar {
-        margin-left:20px;
+        margin-left:0px;
     }
     
 }
