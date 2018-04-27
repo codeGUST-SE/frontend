@@ -32,6 +32,7 @@ class QueryProcessor
     end
 
     @ranker.calculate_order_scores
+    @ranker.calculate_sub_scores
     @ranker.get_ranked_documents
   end
 
