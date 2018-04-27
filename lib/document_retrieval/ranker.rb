@@ -26,7 +26,7 @@ class Ranker
   end
 
   def calculate_order_scores
-    @docs.get_docs.each do |url, doc|
+    @docs.get_docs.pmap do |url, doc|
       order_score = 0
       @query.each_with_index do |token1, w1_i|
         w1 = @docs.get_doc_tokens(url)[token1]

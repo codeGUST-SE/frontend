@@ -4,6 +4,7 @@ gem "rails", "~> 5.2.0"
 gem "google-cloud-datastore", "~> 1.4"
 gem 'fast-stemmer'
 gem 'pqueue'
+gem 'celluloid'
 
 gem 'bootstrap', '~> 4.1.0'
 gem "jquery-rails"
