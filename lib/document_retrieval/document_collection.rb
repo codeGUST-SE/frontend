@@ -33,6 +33,8 @@ class DocumentCollection
 
   class Document
 
+    SNIPPED_LENGTH = 300
+
     W = { :order_score => 1.0, :sub_score => 1.0, :title_score => 1.0, :count_score => 1.0, :special_score => 1.0}
 
     attr_accessor :order_score, :sub_score, :title_score, :count_score, :special_score
@@ -57,7 +59,7 @@ class DocumentCollection
     end
 
     def snippet
-      @html.length > 30 ? @html[0...30] : @html
+      @html.length > SNIPPED_LENGTH ? @html[0...SNIPPED_LENGTH] : @html
     end
 
     def hash
