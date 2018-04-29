@@ -12,9 +12,9 @@
   </nav>
   <div class="list">
     <% @search_results.each do |result| %>
-      <div class="card" onclick="window.open('<%=result.url%>');">
+      <div class="card">
         <div class="row">
-          <p class="col-9 col-lg-10 col-md-9 col-sm-9 header-text">
+          <p class="col-9 col-lg-10 col-md-9 col-sm-9 header-text" onclick="window.open('<%=result.url%>');">
             <%= result.title %>
           </p>
           <p class="col-3 col-lg-2 col-md-3 col-sm-3 header-text">
