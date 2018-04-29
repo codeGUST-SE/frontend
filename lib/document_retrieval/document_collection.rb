@@ -1,12 +1,5 @@
 class DocumentCollection
 
-  PRECISION = 2
-
-  GH_URL = 0
-  SO_URL = 1
-  TP_URL = 2
-  GG_URL = 3
-
   def initialize
     @docs = {}
 
@@ -30,6 +23,14 @@ class DocumentCollection
   end
 
   private
+
+  PRECISION = 2
+
+  GH_URL = 0
+  SO_URL = 1
+  TP_URL = 2
+  GG_URL = 3
+
 
   class Document
 
@@ -124,22 +125,23 @@ class DocumentCollection
   end
 
   def add_doc_special_score(url, special_score)
-    @docs[url].special_score = special_score
+    s = Math::log(special_score)
+    @docs[url].special_score = s.to_f
 
     # special_scores are going to be normalized separately for each url type
     type = url_type(url)
     if type == GH_URL
-      @min_special_score_gh = [@min_special_score_gh, special_score].min.to_f
-      @max_special_score_gh = [@max_special_score_gh, special_score].max.to_f
+      @min_special_score_gh = [@min_special_score_gh, s].min.to_f
+      @max_special_score_gh = [@max_special_score_gh, s].max.to_f
     elsif type == SO_URL
-      @min_special_score_so = [@min_special_score_so, special_score].min.to_f
-      @max_special_score_so = [@max_special_score_so, special_score].max.to_f
+      @min_special_score_so = [@min_special_score_so, s].min.to_f
+      @max_special_score_so = [@max_special_score_so, s].max.to_f
     elsif type == TP_URL
-      @min_special_score_tp = [@min_special_score_tp, special_score].min.to_f
-      @max_special_score_tp = [@max_special_score_tp, special_score].max.to_f
+      @min_special_score_tp = [@min_special_score_tp, s].min.to_f
+      @max_special_score_tp = [@max_special_score_tp, s].max.to_f
     elsif type == GG_URL
-      @min_special_score_gg = [@min_special_score_gg, special_score].min.to_f
-      @max_special_score_gg = [@max_special_score_gg, special_score].max.to_f
+      @min_special_score_gg = [@min_special_score_gg, s].min.to_f
+      @max_special_score_gg = [@max_special_score_gg, s].max.to_f
     end
   end
 
