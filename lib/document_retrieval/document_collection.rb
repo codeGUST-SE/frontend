@@ -45,6 +45,10 @@ class DocumentCollection
       W[:special_score] * @special_score).round(PRECISION)
     end
 
+    def snippet
+      @html.length > 30 ? @html[0...30] : @html
+    end
+
     def hash
       @url
     end
