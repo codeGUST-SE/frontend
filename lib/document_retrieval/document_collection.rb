@@ -2,20 +2,31 @@ class DocumentCollection
 
   PRECISION = 2
 
+  GH_URL = 0
+  SO_URL = 1
+  TP_URL = 2
+  GG_URL = 3
+
   def initialize
     @docs = {}
 
     @min_order_score = 10000000000.0
     @min_title_score = 10000000000.0
     @min_count_score = 10000000000.0
-    @min_special_score = 10000000000.0
     @min_sub_score = 10000000000.0
+    @min_special_score_gh = 10000000000.0
+    @min_special_score_so = 10000000000.0
+    @min_special_score_tp = 10000000000.0
+    @min_special_score_gg = 10000000000.0
 
     @max_order_score = -1.0
     @max_title_score = -1.0
     @max_count_score = -1.0
-    @max_special_score = -1.0
     @max_sub_score = -1.0
+    @max_special_score_gh = -1.0
+    @max_special_score_so = -1.0
+    @max_special_score_tp = -1.0
+    @max_special_score_gg = -1.0
   end
 
   private
@@ -55,15 +66,22 @@ class DocumentCollection
 
   end
 
+  def url_type(url)
+    if /github.com/ =~ url
+      return GH_URL
+    elsif /stackoverflow.com/ =~ url
+      return SO_URL
+    elsif /tutorialspoint.com/ =~ url
+      return TP_URL
+    elsif /geeksforgeeks.org/ =~ url
+      return GG_URL
+    end
+  end
+
   public
 
   def add_doc(url)
     @docs[url] = Document.new(url) if !@docs.key?url
-  end
-
-  def add_doc_special_score(url, special_score)
-    @docs[url].special_score = special_score
-    @min_special_score, @max_special_score = [@min_special_score, @max_special_score, special_score].minmax
   end
 
   def add_doc_title(url, title)
@@ -103,6 +121,26 @@ class DocumentCollection
     @max_sub_score = [@max_sub_score, sub_score].max.to_f
   end
 
+  def add_doc_special_score(url, special_score)
+    @docs[url].special_score = special_score
+
+    # special_scores are going to be normalized separately for each url type
+    type = url_type(url)
+    if type == GH_URL
+      @min_special_score_gh = [@min_special_score_gh, special_score].min.to_f
+      @max_special_score_gh = [@max_special_score_gh, special_score].max.to_f
+    elsif type == SO_URL
+      @min_special_score_so = [@min_special_score_so, special_score].min.to_f
+      @max_special_score_so = [@max_special_score_so, special_score].max.to_f
+    elsif type == TP_URL
+      @min_special_score_tp = [@min_special_score_tp, special_score].min.to_f
+      @max_special_score_tp = [@max_special_score_tp, special_score].max.to_f
+    elsif type == GG_URL
+      @min_special_score_gg = [@min_special_score_gg, special_score].min.to_f
+      @max_special_score_gg = [@max_special_score_gg, special_score].max.to_f
+    end
+  end
+
   def get_docs
     @docs
   end
@@ -125,8 +163,18 @@ class DocumentCollection
       doc.sub_score = ((doc.sub_score - @min_sub_score)/(@max_sub_score - @min_sub_score)).round(PRECISION)
       doc.title_score = ((doc.title_score - @min_title_score)/(@max_title_score - @min_title_score)).round(PRECISION)
       doc.count_score = ((doc.count_score - @min_count_score)/(@max_count_score - @min_count_score)).round(PRECISION)
-      # TODO normalize special_score separately for each site
-      doc.special_score = ((doc.special_score - @min_special_score)/(@max_special_score - @min_special_score)).round(PRECISION)
+
+      # Normalize special_score separately for each url type separately
+      type = url_type(url)
+      if type == GH_URL
+        doc.special_score = ((doc.special_score - @min_special_score_gh)/(@max_special_score_gh - @min_special_score_gh)).round(PRECISION)
+      elsif type == SO_URL
+        doc.special_score = ((doc.special_score - @min_special_score_so)/(@max_special_score_so - @min_special_score_so)).round(PRECISION)
+      elsif type == TP_URL
+        doc.special_score = ((doc.special_score - @min_special_score_tp)/(@max_special_score_tp - @min_special_score_tp)).round(PRECISION)
+      elsif type == GG_URL
+        doc.special_score = ((doc.special_score - @min_special_score_gg)/(@max_special_score_gg - @min_special_score_gg)).round(PRECISION)
+      end
     end
   end
 
