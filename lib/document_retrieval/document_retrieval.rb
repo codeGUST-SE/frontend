@@ -29,15 +29,26 @@ module DocumentRetrieval
     result_hash
   end
 
-  def self.retrieve_page(url)
-    key = @@datastore.key(PAGE_KIND, url)
-    entity = @@datastore.find(key)
+  def self.retrieve_pages(url_list)
+    results = {}
 
-    # TODO handle possible exceptions
-    # TODO handle nil
+    urls = url_list.each_slice(200).to_a  # TODO determine best batch size
+    urls.each do |sub_urls|
+      key_list = []
+      sub_urls.each do |url|
+        key_list << @@datastore.key(PAGE_KIND, url)
+      end
+      entities = @@datastore.find_all(*key_list)
 
-    {:title => entity['page_title'], :html => entity['page_html'],
-      :score => entity['page_scores']}
+      # TODO handle possible exceptions
+      # TODO handle nil
+      entities.each do |entity|
+        results[entity['page_url']] = {
+          :title => entity['page_title'], :html => entity['page_html'],
+          :score => entity['page_scores']}
+      end
+    end
+    results
   end
 
 end

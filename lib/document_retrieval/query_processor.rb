@@ -44,8 +44,9 @@ class QueryProcessor
   private
 
   def retrieve_pages
-    @docs.get_docs.each do |url, doc|
-      h = DocumentRetrieval.retrieve_page(url)
+    keys = @docs.get_docs.keys
+    hash = DocumentRetrieval.retrieve_pages(keys)
+    hash.each do |url, h|
       @docs.add_doc_title(url, h[:title])
       @docs.add_doc_html(url, h[:html])
       # Calculate special_score given the special divs and other features
