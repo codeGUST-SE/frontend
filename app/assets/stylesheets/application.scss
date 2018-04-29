@@ -14,9 +14,6 @@
  *= require_tree .
  *= require_self
  */
- /*
- *= require font-awesome
- */
 
  @import "bootstrap";
 
@@ -54,6 +51,9 @@
     font-size: 29px;
     cursor: pointer;
     color: #999999;
+    border-color: white;
+    background: transparent;
+    border-style: solid;
 }
 .white {
     background-color: #ffffff;
