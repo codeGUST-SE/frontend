@@ -31,12 +31,30 @@ class QueryProcessor
       end
     end
 
+    t1 = Thread.new do
+      retrieve_pages
+    end
+
     @ranker.calculate_order_scores
     @ranker.calculate_sub_scores
+    t1.join
     @ranker.get_ranked_documents
   end
 
   private
+
+  def retrieve_pages
+    keys = @docs.get_docs.keys
+    hash = DocumentRetrieval.retrieve_pages(keys)
+    hash.each do |url, h|
+      @docs.add_doc_title(url, h[:title])
+      @docs.add_doc_html(url, h[:html])
+      # Calculate special_score given the special divs and other features
+      # TODO add special score to some pages for special queries
+      special_score = h[:score].gsub(/[^\d]/, ' ').split.inject(0){|s,x| s + x.to_i }
+      @docs.add_doc_special_score(url, special_score)
+    end
+  end
 
   def get_index_to_url
     results = {}

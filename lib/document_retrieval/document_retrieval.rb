@@ -3,6 +3,8 @@ require 'google/cloud/datastore'
 module DocumentRetrieval
 
   INDEX_KIND = 'index'
+  PAGE_KIND = 'page'
+
   @@cache = ActiveSupport::Cache::MemoryStore.new
 
   # Google::Cloud::Datastore::Dataset for the configured dataset
@@ -25,6 +27,28 @@ module DocumentRetrieval
 
     @@cache.write(index, result_hash, expires_in: 30.day)
     result_hash
+  end
+
+  def self.retrieve_pages(url_list)
+    results = {}
+
+    urls = url_list.each_slice(200).to_a  # TODO determine best batch size
+    urls.each do |sub_urls|
+      key_list = []
+      sub_urls.each do |url|
+        key_list << @@datastore.key(PAGE_KIND, url)
+      end
+      entities = @@datastore.find_all(*key_list)
+
+      # TODO handle possible exceptions
+      # TODO handle nil
+      entities.each do |entity|
+        results[entity['page_url']] = {
+          :title => entity['page_title'], :html => entity['page_html'],
+          :score => entity['page_scores']}
+      end
+    end
+    results
   end
 
 end
