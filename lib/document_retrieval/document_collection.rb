@@ -121,6 +121,7 @@ class DocumentCollection
       doc.sub_score = ((doc.sub_score - @min_sub_score)/(@max_sub_score - @min_sub_score)).round(PRECISION)
       doc.title_score = ((doc.title_score - @min_title_score)/(@max_title_score - @min_title_score)).round(PRECISION)
       doc.count_score = ((doc.count_score - @min_count_score)/(@max_count_score - @min_count_score)).round(PRECISION)
+      # TODO normalize special_score separately for each site
       doc.special_score = ((doc.special_score - @min_special_score)/(@max_special_score - @min_special_score)).round(PRECISION)
     end
   end
