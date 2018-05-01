@@ -34,7 +34,7 @@ class DocumentCollection
 
   class Document
 
-    SNIPPED_LENGTH = 300
+    SNIPPET_LENGTH = 300
 
     W = { :order_score => 1.0, :sub_score => 1.0, :title_score => 1.0, :count_score => 1.0, :special_score => 1.0}
 
@@ -44,6 +44,8 @@ class DocumentCollection
 
     def initialize(url)
       @url = url
+      @title = ''
+      @html = ''
       @order_score = 0.0
       @sub_score = 0.0
       @title_score = 0.0
@@ -60,7 +62,7 @@ class DocumentCollection
     end
 
     def snippet
-      @html.length > SNIPPED_LENGTH ? @html[0...SNIPPED_LENGTH] : @html
+      @html.length > SNIPPET_LENGTH ? @html[0...SNIPPET_LENGTH] : @html
     end
 
     def hash

@@ -32,7 +32,7 @@ module DocumentRetrieval
   def self.retrieve_pages(url_list)
     results = {}
 
-    urls = url_list.each_slice(200).to_a  # TODO determine best batch size
+    urls = url_list.each_slice(100).to_a  # TODO determine best batch size
     urls.each do |sub_urls|
       key_list = []
       sub_urls.each do |url|
@@ -42,11 +42,14 @@ module DocumentRetrieval
 
       # TODO handle possible exceptions
       # TODO handle nil
-      entities.each do |entity|
+      entities.all do |entity|
         results[entity['page_url']] = {
           :title => entity['page_title'], :html => entity['page_html'],
           :score => entity['page_scores']}
       end
+      puts "Deferred: #{entities.deferred}"
+      puts "Missing: #{entities.missing}"
+      puts "#{entities.length} / #{key_list.length}"
     end
     results
   end
