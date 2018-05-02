@@ -2,6 +2,7 @@ class DocumentCollection
 
   def initialize
     @docs = {}
+
     @selected_urls = []
 
     @min_order_score = 0.0
@@ -180,6 +181,7 @@ class DocumentCollection
   def normalize_selected_scores()
     @selected_urls.each do |url|
       doc = @docs[url]
+
       # Normalize special_score separately for each url type separately
       type = url_type(url)
       if type == GH_URL
