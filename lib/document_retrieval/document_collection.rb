@@ -3,23 +3,25 @@ class DocumentCollection
   def initialize
     @docs = {}
 
-    @min_order_score = 10000000000.0
-    @min_title_score = 10000000000.0
-    @min_count_score = 10000000000.0
-    @min_sub_score = 10000000000.0
-    @min_special_score_gh = 10000000000.0
-    @min_special_score_so = 10000000000.0
-    @min_special_score_tp = 10000000000.0
-    @min_special_score_gg = 10000000000.0
+    @selected_urls = []
 
-    @max_order_score = -1.0
-    @max_title_score = -1.0
-    @max_count_score = -1.0
-    @max_sub_score = -1.0
-    @max_special_score_gh = -1.0
-    @max_special_score_so = -1.0
-    @max_special_score_tp = -1.0
-    @max_special_score_gg = -1.0
+    @min_order_score = 0.0
+    @min_title_score = 0.0
+    @min_count_score = 0.0
+    @min_sub_score = 0.0
+    @min_special_score_gh = 0.0
+    @min_special_score_so = 0.0
+    @min_special_score_tp = 0.0
+    @min_special_score_gg = 0.0
+
+    @max_order_score = 0.0
+    @max_title_score = 0.0
+    @max_count_score = 0.0
+    @max_sub_score = 0.0
+    @max_special_score_gh = 0.0
+    @max_special_score_so = 0.0
+    @max_special_score_tp = 0.0
+    @max_special_score_gg = 0.0
   end
 
   private
@@ -34,7 +36,7 @@ class DocumentCollection
 
   class Document
 
-    SNIPPED_LENGTH = 300
+    SNIPPET_LENGTH = 300
 
     W = { :order_score => 1.0, :sub_score => 1.0, :title_score => 1.0, :count_score => 1.0, :special_score => 1.0}
 
@@ -44,6 +46,8 @@ class DocumentCollection
 
     def initialize(url)
       @url = url
+      @title = ''
+      @html = ''
       @order_score = 0.0
       @sub_score = 0.0
       @title_score = 0.0
@@ -60,7 +64,7 @@ class DocumentCollection
     end
 
     def snippet
-      @html.length > SNIPPED_LENGTH ? @html[0...SNIPPED_LENGTH] : @html
+      @html.length > SNIPPET_LENGTH ? @html[0...SNIPPET_LENGTH] : @html
     end
 
     def hash
@@ -149,6 +153,10 @@ class DocumentCollection
     @docs
   end
 
+  def get_selected_urls
+    @selected_urls
+  end
+
   def get_doc_tokens(url)
     @docs[url].tokens
   end
@@ -167,6 +175,12 @@ class DocumentCollection
       doc.sub_score = ((doc.sub_score - @min_sub_score)/(@max_sub_score - @min_sub_score)).round(PRECISION)
       doc.title_score = ((doc.title_score - @min_title_score)/(@max_title_score - @min_title_score)).round(PRECISION)
       doc.count_score = ((doc.count_score - @min_count_score)/(@max_count_score - @min_count_score)).round(PRECISION)
+    end
+  end
+
+  def normalize_selected_scores()
+    @selected_urls.each do |url|
+      doc = @docs[url]
 
       # Normalize special_score separately for each url type separately
       type = url_type(url)
@@ -179,6 +193,7 @@ class DocumentCollection
       elsif type == GG_URL
         doc.special_score = ((doc.special_score - @min_special_score_gg)/(@max_special_score_gg - @min_special_score_gg)).round(PRECISION)
       end
+      doc.special_score = 0.0 if doc.special_score.nan?
     end
   end
 

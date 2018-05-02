@@ -31,20 +31,17 @@ class QueryProcessor
       end
     end
 
-    t1 = Thread.new do
-      retrieve_pages
-    end
-
     @ranker.calculate_order_scores
     @ranker.calculate_sub_scores
-    t1.join
+    @ranker.get_selected_documents
+    retrieve_pages
     @ranker.get_ranked_documents
   end
 
   private
 
   def retrieve_pages
-    keys = @docs.get_docs.keys
+    keys = @docs.get_selected_urls
     hash = DocumentRetrieval.retrieve_pages(keys)
     hash.each do |url, h|
       @docs.add_doc_title(url, h[:title])

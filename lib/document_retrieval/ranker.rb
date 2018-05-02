@@ -2,7 +2,7 @@ require 'pqueue'
 
 class Ranker
 
-  MAX_RESULT_NUMBER = 100
+  MAX_RESULT_NUMBER = 50
 
   SUB_SCORE_2_DIST = 5
   SUB_SCORE_3_DIST = 8
@@ -12,7 +12,7 @@ class Ranker
     @docs = docs
   end
 
-  def get_ranked_documents
+  def get_selected_documents
     @docs.normalize_scores
     # Priority Queue of Document type
     doc_pq = PQueue.new() { |a,b| a.total > b.total }
@@ -20,10 +20,26 @@ class Ranker
       doc_pq.push doc
     end
 
-    results = []
-    (0..MAX_RESULT_NUMBER).each do
+    (0...MAX_RESULT_NUMBER).each do
       break if doc_pq.top == nil
-      results << doc_pq.pop
+      d = doc_pq.pop
+      @docs.get_selected_urls << d.url
+    end
+  end
+
+  def get_ranked_documents
+    @docs.normalize_selected_scores
+    # Priority Queue of Document type
+    doc_pq = PQueue.new() { |a,b| a.total > b.total }
+    @docs.get_selected_urls.each do |url|
+      doc_pq.push(@docs.get_docs[url])
+    end
+
+    results = []
+    (0...MAX_RESULT_NUMBER).each do
+      break if doc_pq.top == nil
+      d = doc_pq.pop
+      results << d
     end
     results
   end
@@ -96,7 +112,7 @@ class Ranker
           p3 += 1 if i == 2
         end
       end
-      
+
       @docs.add_doc_sub_score(url, sub_score2 + sub_score3)
     end
   end

@@ -32,21 +32,21 @@ module DocumentRetrieval
   def self.retrieve_pages(url_list)
     results = {}
 
-    urls = url_list.each_slice(200).to_a  # TODO determine best batch size
-    urls.each do |sub_urls|
-      key_list = []
-      sub_urls.each do |url|
-        key_list << @@datastore.key(PAGE_KIND, url)
-      end
-      entities = @@datastore.find_all(*key_list)
+    key_list = []
+    url_list.each do |url|
+      key_list << @@datastore.key(PAGE_KIND, url)
+    end
 
+    while key_list.length != 0
+      entities = @@datastore.find_all(*key_list)
       # TODO handle possible exceptions
       # TODO handle nil
-      entities.each do |entity|
+      entities.all do |entity|
         results[entity['page_url']] = {
           :title => entity['page_title'], :html => entity['page_html'],
           :score => entity['page_scores']}
       end
+      key_list = entities.deferred
     end
     results
   end
