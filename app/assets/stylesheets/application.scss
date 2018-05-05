@@ -68,10 +68,15 @@
     flex-wrap: none !important;
  }
 
- .frontpage-image {
-     width: 50%;
-     margin-left: 27px;
- }
+.place-Image{
+    width: 51%;
+}
+
+.frontpage-image {
+    max-width: 100%;
+    height: auto;
+    width: auto\9; /* ie8 */
+}
 
 .list {
     margin-left: 3%;
@@ -143,9 +148,8 @@
         width: 100%;
         padding: 10px;
     }
-    .frontpage-image {
-        width: 86%;
-        margin-left: 12px;
+    .place-Image {
+        width: 77%;
     }
     .card {
         margin-top: 10px;
