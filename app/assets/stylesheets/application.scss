@@ -68,6 +68,11 @@
     flex-wrap: none !important;
  }
 
+ .frontpage-image {
+     width: 50%;
+     margin-left: 27px;
+ }
+
 .list {
     margin-left: 3%;
     margin-top: 3%;
@@ -101,6 +106,23 @@
     margin-left:20px;
     width: 39%;
 }
+.center-nav-bar {
+    margin-right: -7.7rem !important;
+}
+
+.nav-bar-img {
+    width: 50%;
+}
+
+.description {
+    padding-right: 4px;
+}
+
+
+.disabledLinks {
+    pointer-events: none;
+    cursor: default;
+}
 
 @media only screen and (max-width: 1200px) {
     .card {
@@ -114,16 +136,16 @@
         width: 40%;
     }
 }
-.disabledLinks {
-    pointer-events: none;
-    cursor: default;
- }
 
 @media only screen and (max-width: 768px) {
     .center-nav-bar {
         margin: auto;
         width: 100%;
         padding: 10px;
+    }
+    .frontpage-image {
+        width: 86%;
+        margin-left: 12px;
     }
     .card {
         margin-top: 10px;
