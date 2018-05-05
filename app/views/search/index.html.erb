@@ -14,16 +14,16 @@
     <% @search_results.each do |result| %>
       <div class="card">
         <div class="row">
-          <p class="col-9 col-lg-10 col-md-9 col-sm-9 header-text" style="cursor: pointer;" onclick="window.open('<%=result.url%>');">
+          <h3 class="col-9 col-lg-10 col-md-9 col-sm-9 header-text" style="cursor: pointer;" onclick="window.open('<%=result.url%>');">
             <%= result.title %>
-          </p>
-          <p class="col-3 col-lg-2 col-md-3 col-sm-3 header-text">
+          </h3>
+          <h4 class="col-3 col-lg-2 col-md-3 col-sm-3 header-text">
             <%= result.total %>
-          </p>
+          </h4>
         </div>
-        <div class="description">
+        <p class="description">
           <%= result.snippet %>
-        </div>
+        </p>
         <%= link_to result.url,result.url, class: "link-css disabledLinks" %>
       </div>
       <% end %>

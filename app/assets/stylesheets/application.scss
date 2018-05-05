@@ -71,7 +71,13 @@
 .place-Image{
     width: 51%;
 }
-
+h3, .h3 {
+    font-size: 18px;
+}
+h4, .h4 {
+    margin-top: 3px;
+    font-size: 14.5px;
+}
 .frontpage-image {
     max-width: 100%;
     height: auto;
@@ -122,6 +128,8 @@
 
 .description {
     padding-right: 4px;
+    font-size: 14px;
+    color: #545454;
 }
 
 .disabledLinks {
@@ -187,6 +195,14 @@
     .space-nav-bar {
         margin-left:0px;
         width: 100%;
+    }
+
+    h3, .h3 {
+        font-size: 20px;
+    }
+    h4, .h4 {
+        margin-top: 3px;
+        font-size: 16.5px;
     }
     
 }
