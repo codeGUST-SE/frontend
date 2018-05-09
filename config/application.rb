@@ -15,5 +15,6 @@ Bundler.require(*Rails.groups)
 module CodeGustFrontendApp
   class Application < Rails::Application
     config.eager_load_paths += %W(#{config.root}/lib/document_retrieval)
+    config.eager_load_paths += %W(#{config.root}/lib/current_block_queue)
   end
 end

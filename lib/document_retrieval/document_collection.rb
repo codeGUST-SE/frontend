@@ -1,3 +1,6 @@
+require 'fast_stemmer'
+require 'set'
+
 class DocumentCollection
 
   def initialize
@@ -65,6 +68,32 @@ class DocumentCollection
 
     def snippet
       @html.length > SNIPPET_LENGTH ? @html[0...SNIPPET_LENGTH] : @html
+    end
+
+    def snippet
+      html = @html.split()
+      query = tokens.keys
+
+      cbq = CurrentBlockQueue.new(query)
+
+      html.each_with_index do |word, i|
+        stemmed_word = Stemmer::stem_word(word.downcase)
+        puts 'HIIIIIIIIIIIIIII' if stemmed_word == 'nokogiri'
+        cbq.add(stemmed_word, i) if query.include? stemmed_word
+      end
+
+      best_window = cbq.best_window
+
+      return_html = []
+      puts "#{best_window}"
+      for i in (best_window[0]...best_window[1])
+        if query.include? Stemmer::stem_word(html[i].downcase)
+          return_html << '<b>' + html[i] + '</b>'
+        else
+          return_html << html[i]
+        end
+      end
+      return_html
     end
 
     def hash
