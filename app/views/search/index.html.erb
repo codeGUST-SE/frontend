@@ -1,9 +1,9 @@
 <div class="container-fluid margin-left">
   <nav class="navbar navbar-expand-lg navbar-light white">
-    <div class='navbar-brand center-nav-bar mr-sm-2'>
-      <%= inline_svg "logo-small.svg", class: "center-nav-bar"%>
+    <div class='navbar-brand mr-sm-2 center-nav-bar'>
+        <%= image_tag 'logo-sm.png', class: "nav-bar-img center"%>
     </div>
-    <%= form_tag({:controller => "search", :action => "index"},:class => "center-nav-bar space-nav-bar", :method => "get") do %>
+    <%= form_tag({:controller => "search", :action => "index"},:class => "space-nav-bar", :method => "get") do %>
       <div class="search-container searchbar mr-sm-2">
       <%= text_field_tag "q", @query, class:"form-control removeform-control-css searchbar searchbar-form-control white", required: true, :autocomplete => :off%>
       <button class= "fas fa-search icon pull-right"></button>
@@ -14,16 +14,16 @@
     <% @search_results.each do |result| %>
       <div class="card">
         <div class="row">
-          <p class="col-9 col-lg-10 col-md-9 col-sm-9 header-text" style="cursor: pointer;" onclick="window.open('<%=result.url%>');">
+          <h3 class="col-9 col-lg-10 col-md-9 col-sm-9 header-text" style="cursor: pointer;" onclick="window.open('<%=result.url%>');">
             <%= result.title %>
-          </p>
-          <p class="col-3 col-lg-2 col-md-3 col-sm-3 header-text">
+          </h3>
+          <h4 class="col-3 col-lg-2 col-md-3 col-sm-3 header-text">
             <%= result.total %>
-          </p>
+          </h4>
         </div>
-        <div>
+        <p class="description">
           <%= result.snippet %>
-        </div>
+        </p>
         <%= link_to result.url,result.url, class: "link-css disabledLinks" %>
       </div>
       <% end %>
