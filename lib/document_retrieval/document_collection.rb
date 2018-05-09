@@ -41,7 +41,7 @@ class DocumentCollection
     SNIPPET_LENGTH_MAX = 800
     SNIPPET_WORD_MIN = 30
 
-    W = { :order_score => 1.0, :sub_score => 1.0, :title_score => 1.0, :count_score => 1.0, :special_score => 1.0}
+    W = { :order_score => 4.0, :sub_score => 2.5, :title_score => 2.0, :count_score => 0.5, :special_score => 1.0}
 
     attr_accessor :order_score, :sub_score, :title_score, :count_score, :special_score
     attr_accessor :url, :title, :html
