@@ -1,3 +1,5 @@
+require 'fast_stemmer'
+
 class DocumentCollection
 
   def initialize
@@ -36,7 +38,8 @@ class DocumentCollection
 
   class Document
 
-    SNIPPET_LENGTH = 300
+    SNIPPET_LENGTH_MAX = 800
+    SNIPPET_WORD_MIN = 30
 
     W = { :order_score => 1.0, :sub_score => 1.0, :title_score => 1.0, :count_score => 1.0, :special_score => 1.0}
 
@@ -64,7 +67,43 @@ class DocumentCollection
     end
 
     def snippet
-      @html.length > SNIPPET_LENGTH ? @html[0...SNIPPET_LENGTH] : @html
+      html = @html.split()
+      query = tokens.keys
+
+      cbq = CurrentBlockQueue.new(query)
+
+      html.each_with_index do |word, i|
+        words = word.gsub(/[^a-z ]/i, ' ').split()
+        words.each do |w|
+          stemmed_word = Stemmer::stem_word(w.downcase)
+          cbq.add(stemmed_word, i) if query.include? stemmed_word
+        end
+      end
+
+      smallest_window = cbq.smallest_window
+
+      if smallest_window[1] - smallest_window[0] < SNIPPET_WORD_MIN
+        smallest_window[0] = smallest_window[0] - 5
+        smallest_window[0] = 0 if smallest_window[0] < 0
+        smallest_window[1] = smallest_window[1] + 5
+        smallest_window[1] = html.length-1 if smallest_window[1] > html.length-1
+      end
+
+      smallest_window = [0, [SNIPPET_WORD_MIN, html.length-1].min] if smallest_window == []
+
+      return_html = []
+      for i in (smallest_window[0]..smallest_window[1])
+        stemmed_word = Stemmer::stem_word(html[i].downcase.gsub(/[^a-z ]/i, ' ').strip)
+        if query.include? stemmed_word
+          return_html << '<b>' + html[i] + '</b>'
+        else
+          return_html << html[i]
+        end
+      end
+
+      result = return_html.join(' ')
+      result = result[0...SNIPPET_LENGTH_MAX] if result.length > SNIPPET_LENGTH_MAX
+      result
     end
 
     def hash

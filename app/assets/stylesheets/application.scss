@@ -71,7 +71,13 @@
 .place-Image{
     width: 51%;
 }
-
+h3, .h3 {
+    font-size: 18px;
+}
+h4, .h4 {
+    margin-top: 3px;
+    font-size: 14.5px;
+}
 .frontpage-image {
     max-width: 100%;
     height: auto;
@@ -112,6 +118,26 @@
     margin-left:20px;
     width: 39%;
     margin-right: -7.7rem !important;
+
+}
+.center-nav-bar {
+    margin-right: -7.7rem !important;
+}
+.nav-bar-img {
+    width: 50%;
+}
+
+.description {
+    padding-right: 4px;
+    font-size: 14px;
+    color: #545454;
+}
+
+.disabledLinks {
+    pointer-events: none;
+    cursor: default;
+
+
 }
 .center-nav-bar {
     margin-right: -7.7rem !important;
@@ -187,6 +213,16 @@
     .space-nav-bar {
         margin-left:0px;
         width: 100%;
+
+    }
+
+    h3, .h3 {
+        font-size: 20px;
+    }
+    h4, .h4 {
+        margin-top: 3px;
+        font-size: 16.5px;
+
     }
     
 }
