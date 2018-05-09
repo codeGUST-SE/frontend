@@ -211,9 +211,13 @@ class DocumentCollection
   def normalize_scores()
     @docs.each do |url, doc|
       doc.order_score = ((doc.order_score - @min_order_score)/(@max_order_score - @min_order_score)).round(PRECISION)
+      doc.order_score = 0.0 if doc.order_score.nan?
       doc.sub_score = ((doc.sub_score - @min_sub_score)/(@max_sub_score - @min_sub_score)).round(PRECISION)
+      doc.sub_score = 0.0 if doc.sub_score.nan?
       doc.title_score = ((doc.title_score - @min_title_score)/(@max_title_score - @min_title_score)).round(PRECISION)
+      doc.title_score = 0.0 if doc.title_score.nan?
       doc.count_score = ((doc.count_score - @min_count_score)/(@max_count_score - @min_count_score)).round(PRECISION)
+      doc.count_score = 0.0 if doc.count_score.nan?
     end
   end
 
