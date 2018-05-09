@@ -53,49 +53,7 @@ class QueryProcessor
     end
   end
 
-  def snippet(html,query)
-    return_html = []
-    queue = []
-    least = ""
-    started = false
-    hash_quey = Hash[query.collect { |v| [v, v] }]
-
-    html.split().each do |word|
-
-      stemmed_word = stemmer(word.downcase)
-      downcased_word = word.downcase
-
-      if downcased_word == queue[0]
-        len = queue.size
-        least = queue.join(' ')
-        while queue[0] == downcased_word do
-          queue.pop
-        end
-      end
-          
-      if hash_quey[stemmed_word] == stemmed_word
-        queue << downcased_word
-        started = true
-      end
-
-      if downcased_word != queue[queue.size-1] and started
-        queue << word.downcase
-      end
-    end
-    
-    least.split().each do |word|
-      stemmed_word = stemmer(word)
-      if hash_quey[stemmed_word] == stemmed_word
-        return_html << '<b>' + word +'</b>'
-      else
-        return_html << word
-      end
-    end
-
-    return_html.join(' ')
-
-  end
-
+ 
   def get_index_to_url
     results = {}
     min_index_size = 200000
@@ -119,10 +77,6 @@ class QueryProcessor
       simple_query << token if !simple_query.include? word
     end
     simple_query
-  end
-
-  def stemmer(word)
-    Stemmer::stem_word(word)
   end
 
 end
