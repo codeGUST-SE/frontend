@@ -136,6 +136,23 @@ h4, .h4 {
     pointer-events: none;
     cursor: default;
 }
+.center-nav-bar {
+    margin-right: -7.7rem !important;
+}
+
+.nav-bar-img {
+    width: 50%;
+}
+
+.description {
+    padding-right: 4px;
+}
+
+
+.disabledLinks {
+    pointer-events: none;
+    cursor: default;
+}
 
 @media only screen and (max-width: 1200px) {
     .card {
