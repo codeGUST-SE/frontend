@@ -45,7 +45,7 @@ class QueryProcessor
     hash = DocumentRetrieval.retrieve_pages(keys)
     hash.each do |url, h|
       @docs.add_doc_title(url, h[:title])
-      @docs.add_doc_html(url, h[:html])
+      @docs.add_doc_html(url, snippet(h[:html],@query))
       # Calculate special_score given the special divs and other features
       # TODO add special score to some pages for special queries
       special_score = h[:score].gsub(/[^\d]/, ' ').split.inject(0){|s,x| s + x.to_i }
@@ -53,6 +53,7 @@ class QueryProcessor
     end
   end
 
+ 
   def get_index_to_url
     results = {}
     min_index_size = 200000
@@ -72,7 +73,7 @@ class QueryProcessor
     query = user_query.gsub(/[^a-z ]/i, ' ').split()
     simple_query = []
     query.each do |word|
-      token = Stemmer::stem_word(word.downcase)
+      token = stemmer(word.downcase)
       simple_query << token if !simple_query.include? word
     end
     simple_query
