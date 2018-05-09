@@ -94,10 +94,14 @@ class DocumentCollection
       return_html = []
       for i in (smallest_window[0]..smallest_window[1])
         stemmed_word = Stemmer::stem_word(html[i].downcase.gsub(/[^a-z ]/i, ' ').strip)
+        
         if query.include? stemmed_word
           return_html << '<b>' + html[i] + '</b>'
         else
-          return_html << html[i]
+          word = html[i]
+          word = word.gsub('<', '&#60;') if word.include?('<')
+          word = word.gsub('>', '&#62;') if word.include?('>')
+          return_html << word
         end
       end
 
