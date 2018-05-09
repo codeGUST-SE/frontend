@@ -89,7 +89,7 @@ class DocumentCollection
         smallest_window[1] = html[html.length-1] if smallest_window[1] > html.length-1
       end
 
-      smallest_window = [0, SNIPPET_WORD_MIN] if smallest_window == []
+      smallest_window = [0, [SNIPPET_WORD_MIN, html.length-1].min] if smallest_window == []
 
       return_html = []
       for i in (smallest_window[0]..smallest_window[1])
