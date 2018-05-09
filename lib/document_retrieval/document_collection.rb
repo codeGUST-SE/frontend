@@ -86,11 +86,12 @@ class DocumentCollection
         smallest_window[0] = smallest_window[0] - 5
         smallest_window[0] = 0 if smallest_window[0] < 0
         smallest_window[1] = smallest_window[1] + 5
-        smallest_window[1] = html[html.length-1] if smallest_window[1] > html.length-1
+        smallest_window[1] = html.length-1 if smallest_window[1] > html.length-1
       end
 
       smallest_window = [0, [SNIPPET_WORD_MIN, html.length-1].min] if smallest_window == []
 
+      puts "#{smallest_window}"
       return_html = []
       for i in (smallest_window[0]..smallest_window[1])
         stemmed_word = Stemmer::stem_word(html[i].downcase.gsub(/[^a-z ]/i, ' ').strip)
