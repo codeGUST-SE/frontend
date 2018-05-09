@@ -68,7 +68,7 @@ class QueryProcessor
   end
 
   def simplify_query(user_query)
-    is_howto = user_query.gsub(/[^a-z ]/i, ' ') =~ /how to .*/
+    is_howto = /how to .*/ =~ user_query.gsub(/[^a-z ]/i, ' ')
     query = user_query.gsub(/[^a-z ]/i, ' ').split()
     simple_query = []
     query.each do |word|
