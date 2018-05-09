@@ -83,6 +83,8 @@ class QueryProcessor
       end
     end
     
+    least = queue.join(' ') if least.length == 0
+    
     least.split().each do |word|
       stemmed_word = stemmer(word)
       if hash_quey[stemmed_word] == stemmed_word
