@@ -99,8 +99,7 @@ class DocumentCollection
           return_html << '<b>' + html[i] + '</b>'
         else
           word = html[i]
-          word = word.gsub('<', '&#60;') if word.include?('<')
-          word = word.gsub('>', '&#62;') if word.include?('>')
+          word = html_tags_removal(word) if word.include?('<') or word.include?('>')
           return_html << word
         end
       end
@@ -108,6 +107,11 @@ class DocumentCollection
       result = return_html.join(' ')
       result = result[0...SNIPPET_LENGTH_MAX] if result.length > SNIPPET_LENGTH_MAX
       result
+    end
+
+    def html_tags_removal(word)
+      word = word.gsub('<', '&#60;')
+      word = word.gsub('>', '&#62;') 
     end
 
     def hash
