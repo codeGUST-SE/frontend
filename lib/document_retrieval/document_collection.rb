@@ -167,7 +167,7 @@ class DocumentCollection
     @max_sub_score = [@max_sub_score, sub_score].max.to_f
   end
 
-  def add_doc_special_score(url, special_score)
+  def add_doc_special_score(url, special_score, is_howto)
     s = Math::log(special_score)
     @docs[url].special_score = s.to_f
 
@@ -180,9 +180,11 @@ class DocumentCollection
       @min_special_score_so = [@min_special_score_so, s].min.to_f
       @max_special_score_so = [@max_special_score_so, s].max.to_f
     elsif type == TP_URL
+      s = 1 if is_howto
       @min_special_score_tp = [@min_special_score_tp, s].min.to_f
       @max_special_score_tp = [@max_special_score_tp, s].max.to_f
     elsif type == GG_URL
+      s = 1 if is_howto
       @min_special_score_gg = [@min_special_score_gg, s].min.to_f
       @max_special_score_gg = [@max_special_score_gg, s].max.to_f
     end
