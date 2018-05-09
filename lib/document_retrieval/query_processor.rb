@@ -96,6 +96,7 @@ class QueryProcessor
 
   end
 
+  
   def get_index_to_url
     results = {}
     min_index_size = 200000

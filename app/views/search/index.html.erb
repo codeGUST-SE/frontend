@@ -21,9 +21,11 @@
             <%= result.total %>
           </h4>
         </div>
+
         <div class="description">
           <%= result.snippet.html_safe %>
         </div>
+
         <%= link_to result.url,result.url, class: "link-css disabledLinks" %>
       </div>
       <% end %>
