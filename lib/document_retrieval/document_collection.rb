@@ -99,7 +99,7 @@ class DocumentCollection
           return_html << '<b>' + html[i] + '</b>'
         else
           word = html[i]
-          word = html_tags_removal(word) if word.include?('<') or word.include?('>')
+          word = html_tags_removal(word) 
           return_html << word
         end
       end
@@ -110,8 +110,8 @@ class DocumentCollection
     end
 
     def html_tags_removal(word)
-      word = word.gsub('<', '&#60;')
-      word = word.gsub('>', '&#62;') 
+      word = word.gsub('<', '&#60;') if word.include?('<')
+      word = word.gsub('>', '&#62;') if word.include?('>')
     end
 
     def hash
