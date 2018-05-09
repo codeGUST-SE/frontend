@@ -91,15 +91,16 @@ class DocumentCollection
 
       smallest_window = [0, [SNIPPET_WORD_MIN, html.length-1].min] if smallest_window == []
 
+      query_set = Set[query]
       return_html = []
       for i in (smallest_window[0]..smallest_window[1])
         stemmed_word = Stemmer::stem_word(html[i].downcase.gsub(/[^a-z ]/i, ' ').strip)
-        
-        if query.include? stemmed_word
-          return_html << '<b>' + html[i] + '</b>'
+        stemmed_word_set = Set[stemmed_word.split()]
+        word = html[i]
+        word = html_tags_removal(word)
+        if query_set.subset?(stemmed_word_set) or query.include? stemmed_word
+          return_html << '<b>' + word + '</b>'
         else
-          word = html[i]
-          word = html_tags_removal(word) 
           return_html << word
         end
       end
@@ -112,6 +113,7 @@ class DocumentCollection
     def html_tags_removal(word)
       word = word.gsub('<', '&#60;') if word.include?('<')
       word = word.gsub('>', '&#62;') if word.include?('>')
+      word
     end
 
     def hash
