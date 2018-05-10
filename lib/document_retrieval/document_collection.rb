@@ -253,13 +253,3 @@ class DocumentCollection
   end
 
 end
-
-
-# 112
-# 136
-# 25
-# 173
-# 69
-# 1164
-# 1096
-# 800
