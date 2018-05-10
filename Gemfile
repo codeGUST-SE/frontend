@@ -8,6 +8,7 @@ gem 'pqueue'
 gem 'bootstrap', '~> 4.1.0'
 gem "jquery-rails"
 gem "turbolinks"
+gem 'htmlentities'
 # For Windows support
 gem "tzinfo-data"
 

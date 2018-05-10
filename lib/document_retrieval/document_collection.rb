@@ -93,10 +93,12 @@ class DocumentCollection
 
       query_set = Set[query]
       return_html = []
-      for i in (smallest_window[0]..smallest_window[1])
-        stemmed_word = Stemmer::stem_word(html[i].downcase.gsub(/[^a-z ]/i, ' ').strip)
+      text = html[smallest_window[0], smallest_window[1]].join(' ')
+      text = text[0...SNIPPET_LENGTH_MAX] if text.length > SNIPPET_LENGTH_MAX
+
+      text.split().each do |word|
+        stemmed_word = Stemmer::stem_word(word.downcase.gsub(/[^a-z ]/i, ' ').strip)
         stemmed_word_set = Set[stemmed_word.split()]
-        word = html[i]
         word = html_tags_removal(word)
         if query_set.subset?(stemmed_word_set) or query.include? stemmed_word
           return_html << '<b>' + word + '</b>'
@@ -105,8 +107,20 @@ class DocumentCollection
         end
       end
 
+      # for i in (smallest_window[0]..smallest_window[1])
+      #   stemmed_word = Stemmer::stem_word(html[i].downcase.gsub(/[^a-z ]/i, ' ').strip)
+      #   stemmed_word_set = Set[stemmed_word.split()]
+      #   word = html[i]
+      #   word = html_tags_removal(word)
+      #   if query_set.subset?(stemmed_word_set) or query.include? stemmed_word
+      #     return_html << '<b>' + word + '</b>'
+      #   else
+      #     return_html << word
+      #   end
+      # end
+
       result = return_html.join(' ')
-      result = result[0...SNIPPET_LENGTH_MAX] if result.length > SNIPPET_LENGTH_MAX
+      # result = result[0...SNIPPET_LENGTH_MAX] if result.length > SNIPPET_LENGTH_MAX
       result
     end
 
@@ -251,3 +265,18 @@ class DocumentCollection
   end
 
 end
+
+
+# text = html[smallest_window[0], smallest_window[1]]
+# text = text[0,SNIPPET_LENGTH_MAX] if text.length > SNIPPET_LENGTH_MAX
+
+# text.each do |word|
+#   stemmed_word = Stemmer::stem_word(word.downcase.gsub(/[^a-z ]/i, ' ').strip)
+#   stemmed_word_set = Set[stemmed_word.split()]
+#   word = html_tags_removal(word)
+#   if query_set.subset?(stemmed_word_set) or query.include? stemmed_word
+#     return_html << '<b>' + word + '</b>'
+#   else
+#     return_html << word
+#   end
+# end
