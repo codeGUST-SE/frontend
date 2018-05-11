@@ -11,6 +11,11 @@
     <% end %>
   </nav>
   <div class="list">
+    <% if @search_results.length == 0%>
+        <div>
+          <p>Not found</p>
+        </div>
+    <%end%>
     <% @search_results.each do |result| %>
       <div class="card">
         <div class="row">
