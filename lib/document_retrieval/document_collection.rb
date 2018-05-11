@@ -91,18 +91,26 @@ class DocumentCollection
 
       smallest_window = [0, [SNIPPET_WORD_MIN, html.length-1].min] if smallest_window == []
 
-      query_set = Set[query]
       return_html = []
       for i in (smallest_window[0]..smallest_window[1])
-        stemmed_word = Stemmer::stem_word(html[i].downcase.gsub(/[^a-z ]/i, ' ').strip)
-        stemmed_word_set = Set[stemmed_word.split()]
-        word = html[i]
-        word = html_tags_removal(word)
-        if query_set.subset?(stemmed_word_set) or query.include? stemmed_word
-          return_html << '<b>' + word + '</b>'
-        else
-          return_html << word
+        words = html[i].gsub(/[^a-z ]/i, ' ').split
+
+        s = 0
+        r = ''
+        words.each do |w|
+          stemmed_word = Stemmer::stem_word(w.downcase)
+          pos = html[i][s...html[i].length].index(w) + s
+          r += html_tags_removal(html[i][s...pos])
+
+          if query.include? stemmed_word
+            r += '<b>' + html_tags_removal(w) + '</b>'
+          else
+            r += html_tags_removal(w)
+          end
+          s = pos + w.length
         end
+        r += html_tags_removal(html[i][s...html[i].length])
+        return_html << r
       end
 
       result = return_html.join(' ')
