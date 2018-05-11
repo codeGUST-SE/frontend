@@ -11,11 +11,12 @@
     <% end %>
   </nav>
   <div class="list">
-    <% if @search_results.length == 0%>
+    <% if @search_results.total_entries == 0%>
         <div>
           <p>Not found</p>
         </div>
     <%end%>
+    <% @search_results %>
     <% @search_results.each do |result| %>
       <div class="card">
         <div class="row">
@@ -34,5 +35,6 @@
         <%= link_to result.url,result.url, class: "link-css disabledLinks" %>
       </div>
       <% end %>
+      <%= will_paginate @search_results %>
   </div>
 </div>

@@ -8,7 +8,7 @@ gem 'pqueue'
 gem 'bootstrap', '~> 4.1.0'
 gem "jquery-rails"
 gem "turbolinks"
-
+gem "will_paginate", '~> 3.1.0'
 # For Windows support
 gem "tzinfo-data"
 
