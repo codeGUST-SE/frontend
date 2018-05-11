@@ -91,31 +91,27 @@ class DocumentCollection
 
       smallest_window = [0, [SNIPPET_WORD_MIN, html.length-1].min] if smallest_window == []
 
-      return_html = []
+      return_html = ' '
       for i in (smallest_window[0]..smallest_window[1])
         words = html[i].gsub(/[^a-z ]/i, ' ').split
 
         s = 0
-        r = ''
         words.each do |w|
           stemmed_word = Stemmer::stem_word(w.downcase)
           pos = html[i][s...html[i].length].index(w) + s
-          r += html_tags_removal(html[i][s...pos])
+          return_html += html_tags_removal(html[i][s...pos])
 
           if query.include? stemmed_word
-            r += '<b>' + html_tags_removal(w) + '</b>'
+            return_html += '<b>' + html_tags_removal(w) + '</b>'
           else
-            r += html_tags_removal(w)
+            return_html += html_tags_removal(w)
           end
           s = pos + w.length
         end
-        r += html_tags_removal(html[i][s...html[i].length])
-        return_html << r
+        return_html += html_tags_removal(html[i][s...html[i].length]) + ' '
+        break if return_html.length > SNIPPET_LENGTH_MAX
       end
-
-      result = return_html.join(' ')
-      result = result[0...SNIPPET_LENGTH_MAX] if result.length > SNIPPET_LENGTH_MAX
-      result
+      return_html
     end
 
     def html_tags_removal(word)
