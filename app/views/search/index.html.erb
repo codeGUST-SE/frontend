@@ -12,7 +12,7 @@
   </nav>
   <div class="list">
     <% if @search_results.length == 0%>
-        <div>
+        <div class="notFound">
           <%= image_tag 'notFound.png',class: 'notFound'%>
         </div>
     <%end%>
