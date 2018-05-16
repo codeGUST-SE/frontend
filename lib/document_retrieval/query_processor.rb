@@ -74,6 +74,7 @@ class QueryProcessor
   def simplify_query(user_query)
     query = user_query
 
+    # parse the query for file extension filter e: .ext
     ext_list = []
     ext_matches_list = []
     user_query.scan(/e: *[.][a-z]+/) do |match|
