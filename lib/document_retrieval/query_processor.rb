@@ -4,7 +4,7 @@ class QueryProcessor
 
   def initialize(user_query)
     @docs = DocumentCollection.new
-    @query, @is_howto, @ext_list = simplify_query(user_query)
+    @query, @is_howto, @ext_list, @repo_list = simplify_query(user_query)
     @ranker = Ranker.new(@query, @docs)
   end
 
@@ -15,6 +15,18 @@ class QueryProcessor
 
       # filter by filename extension
       next if @ext_list.length != 0 && !@ext_list.include?(url[url.rindex('.')..url.length])
+
+      # filter by repo name
+      if @repo_list.length != 0
+        f = false
+        @repo_list.each do |repo|
+          if url.downcase.match?(/https:\/\/github\.com\/.+\/#{repo}/) || url.downcase.match?(/https:\/\/github\.com\/#{repo}\/.+/)
+            f = true
+            break
+          end
+        end
+        next if !f
+      end
 
       h = {}
       t = 0
@@ -77,11 +89,22 @@ class QueryProcessor
     # parse the query for file extension filter e: .ext
     ext_list = []
     ext_matches_list = []
-    user_query.scan(/e: *[.][a-z]+/) do |match|
+    query.scan(/e: *[.][a-z]+/) do |match|
       ext_matches_list << match
       ext_list << match[match.index('.')..match.length]
     end
     ext_matches_list.each do |match|
+      query = query.gsub(match, ' ')
+    end
+
+    # parse the query for repo filter r: repo_name
+    repo_list = []
+    repo_matches_list = []
+    query.scan(/r: *[^ ]+/) do |match|
+      repo_matches_list << match
+      repo_list << match.gsub(' ', '')[match.index(':')+1..match.length].downcase
+    end
+    repo_matches_list.each do |match|
       query = query.gsub(match, ' ')
     end
 
@@ -93,7 +116,7 @@ class QueryProcessor
       simple_query << token if !simple_query.include? word
     end
     simple_query = simple_query[2...simple_query.length] if is_howto
-    return simple_query, is_howto, ext_list
+    return simple_query, is_howto, ext_list, repo_list
   end
 
 end
