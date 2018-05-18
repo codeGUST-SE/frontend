@@ -56,7 +56,7 @@ class Ranker
             w2 = @docs.get_doc_tokens(url)[token2]
             f &&= w2.include? (w1_pos + offset)
             break if !f
-            order_score += offset + 1
+            order_score +=  10 ** (offset + 1)
             offset += 1
           end
         end
