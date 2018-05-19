@@ -31,6 +31,9 @@ class CurrentBlockQueue
   end
 
   def smallest_window
+    # TODO: temporary workaround to bug 
+    if @smallest_window == []
+      @smallest_window = [0,0]
     @smallest_window
   end
 
