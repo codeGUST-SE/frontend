@@ -2,7 +2,7 @@ require 'pqueue'
 
 class Ranker
 
-  MAX_RESULT_NUMBER = 50
+  MAX_RESULT_NUMBER = 10
 
   SUB_SCORE_2_DIST = 5
   SUB_SCORE_3_DIST = 8
