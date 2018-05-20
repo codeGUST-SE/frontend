@@ -56,7 +56,7 @@ class Ranker
             w2 = @docs.get_doc_tokens(url)[token2]
             f &&= w2.include? (w1_pos + offset)
             break if !f
-            order_score += offset + 1
+            order_score +=  10 ** (offset + 1)
             offset += 1
           end
         end
@@ -79,7 +79,7 @@ class Ranker
           break if p1 == pos1_list.length || p2 == pos2_list.length
 
           min, max = [pos1_list[p1], pos2_list[p2]].minmax
-          sub_score2 += 3 if (max - min).abs <= SUB_SCORE_2_DIST
+          sub_score2 += 1 if (max - min).abs <= SUB_SCORE_2_DIST
 
           if pos1_list[p1] < pos2_list[p2]
             p1 += 1
@@ -104,7 +104,7 @@ class Ranker
 
           a = [pos1_list[p1], pos2_list[p2], pos3_list[p3]]
           min, max = a.minmax
-          sub_score3 += 3 if (max - min).abs <= SUB_SCORE_3_DIST
+          sub_score3 += 1 if (max - min).abs <= SUB_SCORE_3_DIST
 
           i = a.find_index(min)
           p1 += 1 if i == 0
