@@ -12,14 +12,7 @@
   </nav>
 
   <div class="retrieval">
-    <p>Retrieval time: <%= @benchmark %> 
-        <% if @benchmark < 1%>
-            ms
-        <%end%>
-        <% if @benchmark > 1%>
-            s
-        <%end%>
-    </p>
+    <p id="retrieval-time">Retrieval time: <%= @benchmark %> s</p>
   </div>
   <div class="list">
     <% if @search_results.length == 0%>
