@@ -120,7 +120,7 @@ class QueryProcessor
       query = query.gsub(match, ' ')
     end
 
-    # parse the query for repo filter r: repo_name
+    # parse the query for repo filter s: site
     site_list = []
     site_matches_list = []
     query.scan(/s: *[^ ]+/) do |match|
