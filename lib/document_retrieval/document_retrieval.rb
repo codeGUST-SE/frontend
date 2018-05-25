@@ -14,7 +14,7 @@ module DocumentRetrieval
   )
 
   def self.retrieve_index(index)
-    @@cache.fetch(index) if @@cache.exist?(index)
+    return @@cache.fetch(index) if @@cache.exist?(index)
     offset = 0
     result_hash = {}
     while true
