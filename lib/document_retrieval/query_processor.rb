@@ -43,7 +43,7 @@ class QueryProcessor
       h = {}
       t = 0
       cnt = 0
-    
+      f = true
       @query.each do |index|
         f &&= index_to_url[index].key? url
         break if f == false
