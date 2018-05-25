@@ -183,6 +183,7 @@ class DocumentCollection
 
   def add_doc_special_score(url, special_score, is_howto)
     s = Math::log(special_score)
+    s = 0 if s < 0
     @docs[url].special_score = s.to_f
 
     # special_scores are going to be normalized separately for each url type
