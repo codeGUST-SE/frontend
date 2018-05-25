@@ -4,7 +4,7 @@ class QueryProcessor
 
   def initialize(user_query)
     @docs = DocumentCollection.new
-    @query, @is_howto, @ext_list, @repo_list = simplify_query(user_query)
+    @query, @is_howto, @ext_list, @repo_list, @site_list = simplify_query(user_query)
     @ranker = Ranker.new(@query, @docs)
   end
 
@@ -21,6 +21,18 @@ class QueryProcessor
         f = false
         @repo_list.each do |repo|
           if url.downcase.match?(/https:\/\/github\.com\/.+\/#{repo}/) || url.downcase.match?(/https:\/\/github\.com\/#{repo}\/.+/)
+            f = true
+            break
+          end
+        end
+        next if !f
+      end
+
+      # filter by site
+      if @site_list.length != 0
+        f = false
+        @site_list.each do |site|
+          if url.downcase.match?(/#{site.downcase}/)
             f = true
             break
           end
@@ -108,6 +120,17 @@ class QueryProcessor
       query = query.gsub(match, ' ')
     end
 
+    # parse the query for repo filter r: repo_name
+    site_list = []
+    site_matches_list = []
+    query.scan(/s: *[^ ]+/) do |match|
+      site_matches_list << match
+      site_list << match.gsub(' ', '')[match.index(':')+1..match.length].downcase
+    end
+    site_matches_list.each do |match|
+      query = query.gsub(match, ' ')
+    end
+
     is_howto = /how to .*/ =~ user_query.gsub(/[^a-z ]/i, ' ')
     query = query.gsub(/[^a-z ]/i, ' ').split()
     simple_query = []
@@ -116,7 +139,7 @@ class QueryProcessor
       simple_query << token if !simple_query.include? word
     end
     simple_query = simple_query[2...simple_query.length] if is_howto
-    return simple_query, is_howto, ext_list, repo_list
+    return simple_query, is_howto, ext_list, repo_list, site_list
   end
 
 end
