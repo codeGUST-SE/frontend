@@ -20,7 +20,7 @@ class QueryProcessor
       if @repo_list.length != 0
         f = false
         @repo_list.each do |repo|
-          if url.downcase.match?(/https:\/\/github\.com\/.+\/#{repo}/) || url.downcase.match?(/https:\/\/github\.com\/#{repo}\/.+/)
+          if url.downcase.match(/https:\/\/github\.com\/.+\/#{repo}/) || url.downcase.match(/https:\/\/github\.com\/#{repo}\/.+/)
             f = true
             break
           end
@@ -32,7 +32,7 @@ class QueryProcessor
       if @site_list.length != 0
         f = false
         @site_list.each do |site|
-          if url.downcase.match?(/#{site.downcase}/)
+          if url.downcase.match(/#{site.downcase}/)
             f = true
             break
           end
@@ -43,7 +43,7 @@ class QueryProcessor
       h = {}
       t = 0
       cnt = 0
-      f = true
+    
       @query.each do |index|
         f &&= index_to_url[index].key? url
         break if f == false
